@@ -71,17 +71,19 @@ func getTodayFileName() string {
 }
 
 func main() {
-	url := getTodayURL()
+	if time.Now().Weekday() != time.Saturday && time.Now().Weekday() != time.Sunday {
+		url := getTodayURL()
 
-	home, _ := os.UserHomeDir()
-	dir := filepath.Join(home, "Izvestia_Newspaper", getCurYear(), getCurMonth(), getWeekOfMonth())
+		home, _ := os.UserHomeDir()
+		dir := filepath.Join(home, "Izvestia_Newspaper", getCurYear(), getCurMonth(), getWeekOfMonth())
 
-	os.MkdirAll(dir, os.ModePerm)
+		os.MkdirAll(dir, os.ModePerm)
 
-	filePath := filepath.Join(dir, getTodayFileName())
+		filePath := filepath.Join(dir, getTodayFileName())
 
-	err := downloadFile(url, filePath)
-	if err != nil {
-		panic(err)
+		err := downloadFile(url, filePath)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
